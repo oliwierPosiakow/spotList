@@ -2,9 +2,9 @@ import {Pressable, Text, StyleSheet} from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import COLORS from "../../constants/colors";
 
-function CustomButton({icon, onPress, text}) {
+function CustomButton({icon, onPress, text, style}) {
     return (
-        <Pressable onPress={onPress} style={({pressed}) => [styles.button, pressed && styles.pressed] }>
+        <Pressable onPress={onPress} style={({pressed}) => [styles.button, style, pressed && styles.pressed] }>
             <FontAwesome5 name={icon} size={20} color={COLORS.primary} />
             <Text style={styles.text}>{text}</Text>
         </Pressable>
