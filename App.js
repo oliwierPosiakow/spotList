@@ -19,11 +19,11 @@ export default function App() {
             <Stack.Navigator screenOptions={{
                 headerStyle: {backgroundColor: COLORS.primary },
                 headerTintColor: COLORS.text1,
-                contentStyle: {backgroundColor: COLORS.background},
+                contentStyle: {backgroundColor: COLORS.background, paddingBottom: 25},
             }}>
                 <Stack.Screen name={'AllPlaces'} component={AllPlaces} options={({navigation}) => ({
                     headerRight: ({tintColor}) => <IconButton icon={'plus'} size={20} color={tintColor} action={() => {navigation.navigate('AddPlace')}}/>,
-                    title: 'All Spots'
+                    title: 'All Spots',
                 })}/>
                 <Stack.Screen name={'AddPlace'} component={AddPlace} options={{
                     title: 'Add a new Spot',

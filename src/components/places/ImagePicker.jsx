@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 2,
-        borderColor: COLORS.primary
+        borderColor: COLORS.primary,
+        borderRadius: 7,
+        overflow: "hidden",
     },
     imagePreviewImage:{
         width: '100%',
