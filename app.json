@@ -11,6 +11,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Capture your favourite Spot from inside of our app."
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
