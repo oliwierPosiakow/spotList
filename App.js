@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import AllPlaces from "./src/screens/AllPlaces";
 import AddPlace from "./src/screens/AddPlace";
 import IconButton from "./src/components/UI/IconButton";
-import {useNavigation} from "@react-navigation/native";
 import COLORS from "./src/constants/colors";
+import Map from './src/screens/Map'
 
 const Stack = createNativeStackNavigator()
 
@@ -28,6 +28,7 @@ export default function App() {
                 <Stack.Screen name={'AddPlace'} component={AddPlace} options={{
                     title: 'Add a new Spot',
                 }}/>
+                <Stack.Screen name={'Map'} component={Map}/>
             </Stack.Navigator>
         </NavigationContainer>
       </>
