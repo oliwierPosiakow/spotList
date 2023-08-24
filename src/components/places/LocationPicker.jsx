@@ -2,15 +2,24 @@ import {Alert, Image, StyleSheet, View} from "react-native";
 import CustomButton from "../UI/CustomButton";
 import COLORS from "../../constants/colors";
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from "expo-location";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import getMapPreview from "../../util/location";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute, useIsFocused} from "@react-navigation/native";
 
 function LocationPicker(){
 
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
     const [location, setLocation] = useState()
     const navigator = useNavigation()
+    const route = useRoute()
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        if(isFocused && route.params){
+            const mapPickedLocation = route.params && {lat: route.params.pickedLat, lng: route.params.pickedLng}
+            setLocation(mapPickedLocation)
+        }
+    }, [route, isFocused]);
 
     async function getPermissions(){
         if(locationPermissionInformation.status === PermissionStatus.UNDETERMINED){
@@ -41,7 +50,6 @@ function LocationPicker(){
     }
     function pickOnMapHandler(){
         navigator.navigate('Map')
-
     }
 
     let mapPreview = (
