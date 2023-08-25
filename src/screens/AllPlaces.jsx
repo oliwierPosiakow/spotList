@@ -1,8 +1,24 @@
 import PlacesList from "../components/places/PlacesList";
+import {useEffect, useState} from "react";
+import {useIsFocused} from "@react-navigation/native";
+import {fetchSpots} from "../util/db";
 
-function AllPlaces(props) {
+
+function AllPlaces({route}) {
+    const [spots, setSpots] = useState([])
+    const focus = useIsFocused()
+
+    useEffect(() => {
+        async function loadSpots() {
+            await fetchSpots()
+        }
+        if(focus){
+            loadSpots()
+        }
+    }, [focus]);
+
     return (
-        <PlacesList />
+        <PlacesList places={spots}/>
     );
 }
 
