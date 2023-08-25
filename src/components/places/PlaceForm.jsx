@@ -1,16 +1,31 @@
 import {View, Text, ScrollView, TextInput, StyleSheet} from "react-native";
-import {useState} from "react";
+import {useState, useCallback} from "react";
 import COLORS from "../../constants/colors";
 import ImagePicker from "./ImagePicker";
 import LocationPicker from "./LocationPicker";
+import CustomButton from "../UI/CustomButton";
 
 function PlaceForm() {
 
     const [title, setTitle] = useState('')
+    const [location, setLocation] = useState()
+    const [image, setImage] = useState()
 
     function changeTitle(enteredText){
         setTitle(enteredText)
     }
+
+    function saveSpotHandler(){
+        console.log(title, location, image)
+    }
+
+    function takeImageHandler(imageUri){
+        setImage(imageUri)
+    }
+
+    const takeLocationHandler = useCallback((location) => {
+        setLocation(location)
+    },[])
 
     return (
         <ScrollView style={styles.form}>
@@ -18,8 +33,9 @@ function PlaceForm() {
                 <Text style={styles.label}>Title</Text>
                 <TextInput style={styles.input} onChangeText={changeTitle} value={title}/>
             </View>
-            <ImagePicker/>
-            <LocationPicker/>
+            <ImagePicker onImagePicked={takeImageHandler}/>
+            <LocationPicker onLocationPicked={takeLocationHandler}/>
+            <CustomButton textStyle={styles.submitButtonText} style={styles.submitButton} text={'Save Spot'} onPress={saveSpotHandler}/>
         </ScrollView>
     )
 }
@@ -43,5 +59,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderBottomColor: COLORS.primary,
         borderBottomWidth: 2,
+    },
+    submitButton:{
+        backgroundColor: COLORS.primary,
+        paddingVertical: 10,
+        marginVertical: 10,
+        marginHorizontal: 0,
+    },
+    submitButtonText:{
+        color: COLORS.text1,
     }
 })

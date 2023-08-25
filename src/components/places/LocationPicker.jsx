@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import getMapPreview from "../../util/location";
 import {useNavigation, useRoute, useIsFocused} from "@react-navigation/native";
 
-function LocationPicker(){
+function LocationPicker({onLocationPicked}){
 
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
     const [location, setLocation] = useState()
@@ -20,6 +20,10 @@ function LocationPicker(){
             setLocation(mapPickedLocation)
         }
     }, [route, isFocused]);
+
+    useEffect(() => {
+        onLocationPicked(location)
+    }, [location, onLocationPicked]);
 
     async function getPermissions(){
         if(locationPermissionInformation.status === PermissionStatus.UNDETERMINED){
@@ -44,6 +48,10 @@ function LocationPicker(){
         const location = await getCurrentPositionAsync()
         console.log(location)
         setLocation({
+            lat: location.coords.latitude,
+            lng: location.coords.longitude,
+        })
+        onLocationPicked({
             lat: location.coords.latitude,
             lng: location.coords.longitude,
         })
