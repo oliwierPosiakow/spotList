@@ -15,19 +15,10 @@ const Stack = createNativeStackNavigator()
 
 export default function App() {
 
-    const [initialising, setInitialising] = useState(true)
-
     useEffect(() => {
-        init().then(() => {
-            setInitialising(false)
-        }).catch((e) => {
-            console.log(e)
-        })
+        init()
     }, []);
 
-    if(initialising){
-        return <AppLoading />
-    }
 
   return (
       <>

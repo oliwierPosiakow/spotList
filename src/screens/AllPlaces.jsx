@@ -10,7 +10,8 @@ function AllPlaces({route}) {
 
     useEffect(() => {
         async function loadSpots() {
-            await fetchSpots()
+            const spots = await fetchSpots()
+            setSpots(spots)
         }
         if(focus){
             loadSpots()

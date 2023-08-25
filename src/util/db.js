@@ -37,7 +37,7 @@ export function insertSpot(spot){
                 [
                     spot.title,
                     spot.imageUri,
-                    spot.address,
+                    spot.location.address,
                     spot.location.lat,
                     spot.location.lng
                 ],
@@ -62,18 +62,22 @@ export function fetchSpots(){
                 [],
                 (_, result) => {
                     const spots = []
+
                     for(const item of result.rows._array ){
                         spots.push(
                             new Place (
                                 item.title,
                                 item.imageUri,
-                                item.address,
-                                item.location.lat,
-                                item.location.lng
+                                {
+                                    address: item.address,
+                                    lat: item.lat,
+                                    lng: item.lng
+                                },
+                                item.id
                             )
                         )
                     }
-                    resolve()
+                    resolve(spots)
                 },
                 (e) => {
                     reject(e)

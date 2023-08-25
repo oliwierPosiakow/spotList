@@ -5,6 +5,7 @@ function AddPlace({navigation}) {
 
     async function createSpotHandler(spot) {
         await insertSpot(spot)
+        navigation.navigate('AllPlaces')
     }
 
     return (

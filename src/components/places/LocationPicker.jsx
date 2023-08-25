@@ -57,7 +57,6 @@ function LocationPicker({onLocationPicked}){
         }
 
         const location = await getCurrentPositionAsync()
-        console.log(location)
         setLocation({
             lat: location.coords.latitude,
             lng: location.coords.longitude,

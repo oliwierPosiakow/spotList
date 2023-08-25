@@ -12,7 +12,7 @@ function PlaceItem({place, onSelect}){
                     {place.title}
                 </Text>
                 <Text style={styles.spotAddress}>
-                    {place.address}
+                    {place.location.address}
                 </Text>
             </View>
         </Pressable>
