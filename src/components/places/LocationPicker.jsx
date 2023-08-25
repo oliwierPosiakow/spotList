@@ -3,7 +3,7 @@ import CustomButton from "../UI/CustomButton";
 import COLORS from "../../constants/colors";
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from "expo-location";
 import {useEffect, useState} from "react";
-import getMapPreview from "../../util/location";
+import {getMapPreview, getAddress} from "../../util/location";
 import {useNavigation, useRoute, useIsFocused} from "@react-navigation/native";
 
 function LocationPicker({onLocationPicked}){
@@ -22,7 +22,18 @@ function LocationPicker({onLocationPicked}){
     }, [route, isFocused]);
 
     useEffect(() => {
-        onLocationPicked(location)
+        async function handleLocation(){
+            if(location){
+               const address = await getAddress(
+                   location.lat,
+                   location.lng
+               )
+                onLocationPicked({...location, address})
+            }
+        }
+
+        handleLocation()
+
     }, [location, onLocationPicked]);
 
     async function getPermissions(){
@@ -89,7 +100,7 @@ export default LocationPicker
 const styles = StyleSheet.create({
     mapPreview: {
         width: '100%',
-        height: 250,
+        height: 220,
         marginVertical: 10,
         justifyContent: "center",
         alignItems: "center",

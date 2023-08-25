@@ -35,7 +35,7 @@ function ImagePicker({onImagePicked}) {
         return true;
     }
 
-    let imagePreview = <CustomButton icon={'camera'} onPress={takeImageHandler} text={'Take a photo'}/>
+    let imagePreview = <CustomButton style={styles.button} icon={'camera'} onPress={takeImageHandler} text={'Take a photo'}/>
 
     if(image){
         imagePreview = <Image style={styles.imagePreviewImage} source={{uri: image}}/>
@@ -56,7 +56,7 @@ export default ImagePicker
 const styles = StyleSheet.create({
     imagePreview:{
         width: '100%',
-        height: 250,
+        height: 220,
         marginVertical: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -71,5 +71,8 @@ const styles = StyleSheet.create({
     },
     imagePreviewText:{
         color: COLORS.primary,
+    },
+    button:{
+        marginHorizontal: 0,
     }
 })
