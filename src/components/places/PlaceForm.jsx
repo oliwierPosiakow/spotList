@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, TextInput, StyleSheet} from "react-native";
+import {View, Text, ScrollView, TextInput, StyleSheet, Alert} from "react-native";
 import {useState, useCallback} from "react";
 import COLORS from "../../constants/colors";
 import ImagePicker from "./ImagePicker";
@@ -11,16 +11,26 @@ function PlaceForm({createSpot}) {
     const [title, setTitle] = useState('')
     const [location, setLocation] = useState()
     const [image, setImage] = useState()
+    const [desc, setDesc] = useState('')
 
     function changeTitle(enteredText){
         setTitle(enteredText)
     }
 
+    function changeDesc(enteredText){
+        setDesc(enteredText)
+    }
+
     function saveSpotHandler(){
+        if(!title || !location || !image){
+            Alert.alert('Form not complete', 'You have to complete whole form to proceed.')
+            return
+        }
         const spotData = new Place(
             title,
             image,
-            location,
+            desc,
+            location
         )
         createSpot(spotData)
     }
@@ -38,6 +48,10 @@ function PlaceForm({createSpot}) {
             <View>
                 <Text style={styles.label}>Title</Text>
                 <TextInput style={styles.input} onChangeText={changeTitle} value={title}/>
+            </View>
+            <View>
+                <Text style={styles.label}>Description</Text>
+                <TextInput style={styles.input} onChangeText={changeDesc} value={desc} multiline={true}/>
             </View>
             <ImagePicker onImagePicked={takeImageHandler}/>
             <LocationPicker onLocationPicked={takeLocationHandler}/>

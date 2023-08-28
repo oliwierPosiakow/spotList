@@ -46,7 +46,7 @@ function ImagePicker({onImagePicked}) {
             <View style={styles.imagePreview}>
                 {imagePreview}
             </View>
-            {image && <CustomButton icon={'camera'} onPress={takeImageHandler} text={'Take a photo'}/> }
+            {image && <CustomButton style={styles.button} icon={'camera'} onPress={takeImageHandler} text={'Take a photo'}/> }
         </View>
     )
 }

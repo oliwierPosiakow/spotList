@@ -7,7 +7,7 @@ import AddPlace from "./src/screens/AddPlace";
 import IconButton from "./src/components/UI/IconButton";
 import COLORS from "./src/constants/colors";
 import Map from './src/screens/Map'
-import {init} from "./src/util/db";
+import {dropSpots, init} from "./src/util/db";
 import {useEffect, useState} from "react";
 import AppLoading from "expo-app-loading";
 import PlaceDetails from "./src/screens/PlaceDetails";

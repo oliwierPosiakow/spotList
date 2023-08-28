@@ -50,15 +50,19 @@ function PlaceDetails({route, navigation}) {
 
     return (
         <ScrollView>
-
             <Image style={styles.image} source={{uri: spotDetails.imageUri}}/>
+            <View style={styles.detailsContainer}>
+                {spotDetails.desc && <View>
+                    <Text style={styles.desc}>{spotDetails.desc}</Text>
+                </View>}
 
-            <View style={styles.location}>
-                <View style={styles.addressContainer}>
-                    <Text style={styles.address}>{spotDetails.location.address}</Text>
+                <View style={styles.location}>
+                    <View style={styles.addressContainer}>
+                        <Text style={styles.address}>{spotDetails.location.address}</Text>
+                    </View>
+
+                    <CustomButton icon={'map'} onPress={showOnMapHandler} text={'View on map'}/>
                 </View>
-
-                <CustomButton icon={'map'} onPress={showOnMapHandler} text={'View on map'}/>
             </View>
         </ScrollView>
     );
@@ -70,6 +74,9 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: "center"
+    },
+    detailsContainer:{
+      padding: 10,
     },
     image:{
         height: '40%',
@@ -90,5 +97,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center"
+    },
+    desc: {
+        textAlign: "center",
+        fontSize: 16,
     }
 })

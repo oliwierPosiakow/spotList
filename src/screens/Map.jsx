@@ -15,14 +15,14 @@ function Map({navigation, route}){
     const [selectedLocation, setSelectedLocation] = useState(initialLocation)
 
     const region = {
-        latitude: initialLocation ? initialLocation.lat : 37.78,
-        longitude: initialLocation ? initialLocation.lng : -122.43,
+        latitude: initialLocation ? initialLocation.lat : 54.37,
+        longitude: initialLocation ? initialLocation.lng : 18.63,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
     }
 
     function handleMapPress(event){
-        if(initialLocation.mode === 'preview'){
+        if(initialLocation?.mode === 'preview'){
             return
         }
         const lat = event.nativeEvent.coordinate.latitude
@@ -40,7 +40,7 @@ function Map({navigation, route}){
     },[navigation, selectedLocation])
 
     useLayoutEffect(() => {
-        if(initialLocation.mode === 'preview'){
+        if(initialLocation?.mode === 'preview'){
             return
         }
         navigation.setOptions({

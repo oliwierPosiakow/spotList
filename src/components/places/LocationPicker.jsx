@@ -77,13 +77,7 @@ function LocationPicker({onLocationPicked}){
         setIsFetching(false)
     }
     async function pickOnMapHandler(){
-        setIsFetching(true)
-        const location = await getCurrentPositionAsync()
-        setIsFetching(false)
-        navigator.navigate('Map', {
-            initialLat: location.coords.latitude,
-            initialLng: location.coords.longitude
-        })
+        navigator.navigate('Map')
     }
 
     let mapPreview = (

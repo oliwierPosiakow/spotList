@@ -11,6 +11,7 @@ export function init(){
                 id INTEGER PRIMARY KEY NOT NULL,
                 title TEXT NOT NULL,
                 imageUri TEXT NOT NULL,
+                desc TEXT,
                 address TEXT NOT NULL,
                 lat REAL NOT NULL,
                 lng REAL NOT NULL
@@ -33,10 +34,11 @@ export function insertSpot(spot){
     const promise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
             tx.executeSql(
-                ` INSERT INTO spots (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
+                ` INSERT INTO spots (title, imageUri, desc, address, lat, lng) VALUES (?, ?, ?, ?, ?, ?)`,
                 [
                     spot.title,
                     spot.imageUri,
+                    spot.desc,
                     spot.location.address,
                     spot.location.lat,
                     spot.location.lng
@@ -68,6 +70,7 @@ export function fetchSpots(){
                             new Place (
                                 item.title,
                                 item.imageUri,
+                                item.desc,
                                 {
                                     address: item.address,
                                     lat: item.lat,
@@ -99,6 +102,7 @@ export function fetchSpotDetails(id){
                     const place = new Place(
                         dbPlace.title,
                         dbPlace.imageUri,
+                        dbPlace.desc,
                         {address: dbPlace.address, lat: dbPlace.lat, lng: dbPlace.lng},
                         dbPlace.id
                     )
@@ -126,6 +130,24 @@ export function deleteSpot(id){
                     reject(e)
                 }
                 )
+        })
+    })
+    return promise
+}
+
+export function dropSpots(){
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                'DROP TABLE spots',
+                [],
+                (_, result) => {
+                    resolve(result)
+                },
+                (e) => {
+                    reject(e)
+                }
+            )
         })
     })
     return promise
