@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
     },
     spotDesc:{
         flex: 3,
-        justifyContent: "space-around",
-        gap: 5,
+        gap: 10,
     },
     spotTitle:{
         fontWeight: "bold",
