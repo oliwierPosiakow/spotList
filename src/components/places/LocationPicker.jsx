@@ -1,4 +1,4 @@
-import {Alert, Image, StyleSheet, View} from "react-native";
+import {Alert, Image, StyleSheet, View, ActivityIndicator} from "react-native";
 import CustomButton from "../UI/CustomButton";
 import COLORS from "../../constants/colors";
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from "expo-location";
@@ -9,6 +9,7 @@ import {useNavigation, useRoute, useIsFocused} from "@react-navigation/native";
 function LocationPicker({onLocationPicked}){
 
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
+    const [isFetching, setIsFetching] = useState(false)
     const [location, setLocation] = useState()
     const navigator = useNavigation()
     const route = useRoute()
@@ -56,15 +57,24 @@ function LocationPicker({onLocationPicked}){
             return
         }
 
-        const location = await getCurrentPositionAsync()
-        setLocation({
-            lat: location.coords.latitude,
-            lng: location.coords.longitude,
-        })
-        onLocationPicked({
-            lat: location.coords.latitude,
-            lng: location.coords.longitude,
-        })
+        setIsFetching(true)
+
+        try{
+            const location = await getCurrentPositionAsync()
+            setLocation({
+                lat: location.coords.latitude,
+                lng: location.coords.longitude,
+            })
+            onLocationPicked({
+                lat: location.coords.latitude,
+                lng: location.coords.longitude,
+            })
+        }
+        catch (e){
+            Alert.alert('Something went wrong.', 'Check your connection ')
+        }
+
+        setIsFetching(false)
     }
     function pickOnMapHandler(){
         navigator.navigate('Map')
@@ -79,6 +89,14 @@ function LocationPicker({onLocationPicked}){
 
     if(location){
         mapPreview = <Image style={styles.mapPreviewImage} source={{uri: getMapPreview(location.lat, location.lng)}}/>
+    }
+
+    if(isFetching){
+        return (
+            <View style={styles.mapPreview}>
+                <ActivityIndicator size={'large'} color={COLORS.primary}/>
+            </View>
+        )
     }
 
     return (
