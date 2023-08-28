@@ -77,11 +77,50 @@ export function fetchSpots(){
                             )
                         )
                     }
-                    const sortedSpots = spots.sort((s1, s2) => {
-                        return (s1.id > s2.id) ? 1 : (s1.id < s2.id) ? -1 : 0
+                    resolve(spots.reverse())
+                },
+                (e) => {
+                    reject(e)
+                }
+                )
+        })
+    })
+    return promise
+}
 
-                    })
-                    resolve(sortedSpots)
+export function fetchSpotDetails(id){
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                'SELECT * FROM spots WHERE id = ?',
+                [id],
+                (_, result) => {
+                    const dbPlace = result.rows._array[0]
+                    const place = new Place(
+                        dbPlace.title,
+                        dbPlace.imageUri,
+                        {address: dbPlace.address, lat: dbPlace.lat, lng: dbPlace.lng},
+                        dbPlace.id
+                    )
+                    resolve(place)
+                },
+                (_, e) => {
+                    reject(e)
+                }
+            )
+        })
+    })
+    return promise
+}
+
+export function deleteSpot(id){
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                'DELETE FROM spots WHERE id = ?',
+                [id],
+                (_, result) => {
+                    resolve(result)
                 },
                 (e) => {
                     reject(e)

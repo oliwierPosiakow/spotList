@@ -1,22 +1,33 @@
 import MapView, {Marker} from "react-native-maps";
-import {StyleSheet, Alert} from "react-native";
-import {useCallback, useLayoutEffect, useState} from "react";
+import {StyleSheet, Alert, Text, View} from "react-native";
+import {useCallback, useEffect, useLayoutEffect, useState} from "react";
 import IconButton from "../components/UI/IconButton";
+import {getCurrentPositionAsync} from "expo-location";
 
-function Map({navigation}){
+function Map({navigation, route}){
 
-    const [selectedLocation, setSelectedLocation] = useState()
+    const initialLocation = route.params && {
+        lat: route.params.initialLat,
+        lng: route.params.initialLng,
+        mode: route.params.mode
+    }
+
+    const [selectedLocation, setSelectedLocation] = useState(initialLocation)
 
     const region = {
-        latitude: 37.78,
-        longitude: -122.43,
+        latitude: initialLocation ? initialLocation.lat : 37.78,
+        longitude: initialLocation ? initialLocation.lng : -122.43,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
     }
 
     function handleMapPress(event){
+        if(initialLocation.mode === 'preview'){
+            return
+        }
         const lat = event.nativeEvent.coordinate.latitude
         const lng = event.nativeEvent.coordinate.longitude
+
         setSelectedLocation({lat: lat, lng: lng})
     }
 
@@ -29,12 +40,15 @@ function Map({navigation}){
     },[navigation, selectedLocation])
 
     useLayoutEffect(() => {
+        if(initialLocation.mode === 'preview'){
+            return
+        }
         navigation.setOptions({
             headerRight: ({tintColor}) => {
                 return <IconButton icon={'save'} size={20} color={tintColor} action={savePickedLocation}/>
             }
         })
-    }, [navigation, savePickedLocation]);
+    }, [navigation, savePickedLocation, initialLocation]);
 
     return(
         <MapView style={styles.map} initialRegion={region} onPress={handleMapPress}>

@@ -4,8 +4,10 @@ import COLORS from "../../constants/colors";
 function PlaceItem({place, onSelect}){
 
     return (
-        <Pressable style={({pressed}) => [styles.spotContainer, pressed && styles.pressed]} onPress={onSelect}>
-
+        <Pressable
+            style={({pressed}) => [styles.spotContainer, pressed && styles.pressed]}
+            onPress={onSelect.bind(this, place.id)}
+        >
             <Image style={styles.spotImg} source={{uri: place.imageUri}}/>
             <View style={styles.spotDesc}>
                 <Text style={styles.spotTitle}>
