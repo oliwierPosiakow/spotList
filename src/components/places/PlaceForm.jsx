@@ -45,11 +45,11 @@ function PlaceForm({createSpot}) {
 
     return (
         <ScrollView style={styles.form}>
-            <View>
+            <View style={styles.inputContainer}>
                 <Text style={styles.label}>Title</Text>
                 <TextInput style={styles.input} onChangeText={changeTitle} value={title}/>
             </View>
-            <View>
+            <View style={styles.inputContainer}>
                 <Text style={styles.label}>Description</Text>
                 <TextInput style={styles.input} onChangeText={changeDesc} value={desc} multiline={true}/>
             </View>
@@ -69,16 +69,17 @@ const styles = StyleSheet.create({
     },
     label: {
         fontWeight: "bold",
-        marginBottom: 5,
         color: COLORS.primary,
         fontSize: 16
     },
     input: {
-        marginVertical: 5,
         paddingVertical: 5,
         fontSize: 16,
         borderBottomColor: COLORS.primary,
         borderBottomWidth: 2,
+    },
+    inputContainer: {
+        marginVertical: 5,
     },
     submitButton:{
         backgroundColor: COLORS.primary,
