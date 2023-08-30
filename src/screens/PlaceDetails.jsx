@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useLayoutEffect} from 'react';
-import {ScrollView, Image, View, Text, StyleSheet, ActivityIndicator} from "react-native";
+import {ScrollView, Image, View, Text, StyleSheet, ActivityIndicator, Alert} from "react-native";
 import CustomButton from "../components/UI/CustomButton";
 import {fetchSpotDetails} from "../util/db";
 import COLORS from "../constants/colors";
@@ -36,8 +36,23 @@ function PlaceDetails({route, navigation}) {
     }
 
     async function removeSpotHandler(id){
-        await deleteSpot(id)
-        navigation.navigate('AllPlaces')
+        Alert.alert(
+            'Do You want to delete this Spot?',
+            'Please confirm deleting Spot.',
+            [
+                {
+                    text: 'Delete',
+                    style: "destructive",
+                    onPress: async () => {
+                        await deleteSpot(id)
+                        navigation.navigate('AllPlaces')
+                    }},
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    onPress: () => {}}
+            ]
+        )
     }
 
     if(!spotDetails){
